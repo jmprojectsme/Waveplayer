@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WavePlayer</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f0c29">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="player">
+  <header>
+    <button id="menuBtn" class="theme-toggle">🎶</button>
+    <h1>WavePlayer</h1>
+    <button id="themeBtn" class="theme-toggle">🌙</button>
+  </header>
+
+  <div id="player-view">
+    <div class="disc-container">
+      <div class="disc left"></div>
+      <div class="disc right"></div>
+    </div>
+
+    <div class="track-info">
+      <h2 id="track-title">Track Title</h2>
+      <h3 id="track-artist">Artist Name</h3>
+    </div>
+
+    <audio id="audio"></audio>
+
+    <div class="seek-bar">
+      <span id="current" class="time">0:00</span>
+      <input type="range" id="seek" value="0" min="0" max="100">
+      <span id="duration" class="time">0:00</span>
+    </div>
+
+    <div class="controls">
+      <button id="prev">⏮️</button>
+      <button id="play">▶️</button>
+      <button id="next">⏭️</button>
+    </div>
+
+    <div class="volume">
+      <span>🔊</span>
+      <input type="range" id="volume" min="0" max="100" value="50">
+    </div>
+  </div>
+
+  <div id="library-view" class="hidden">
+    <div class="library-header">
+      <h3>Playlist</h3>
+      <label for="fileInput" class="upload-label">Add Music</label>
+      <input type="file" id="fileInput" multiple accept="audio/*">
+    </div>
+    <div id="playlist" class="playlist"></div>
+    <button id="backBtn" class="back-btn">Back to Player</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
