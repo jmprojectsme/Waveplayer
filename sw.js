@@ -1,4 +1,4 @@
-const cacheName = 'wave-v2';
+const cacheName = 'wave-v3';
 const assets = [
   './',
   './index.html',
