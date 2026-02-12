@@ -95,3 +95,13 @@ function formatTime(t) { return isNaN(t) ? "0:00" : Math.floor(t/60) + ":" + Str
 if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
 
 
+// Auto-play Next Logic
+audio.onended = () => {
+    if (playlist.length > 0) {
+        currentTrack = (currentTrack + 1) % playlist.length; 
+        loadTrack(currentTrack); 
+        playAudio();
+    }
+};
+
+
