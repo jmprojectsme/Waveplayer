@@ -8,7 +8,7 @@ const backBtn = document.getElementById('backBtn');
 const playlistEl = document.getElementById('playlist');
 const fileInput = document.getElementById('fileInput');
 
-// 1. View Toggling
+// 1. View Toggling (Your original logic)
 menuBtn.onclick = () => {
     document.getElementById('player-view').classList.add('hidden');
     document.getElementById('library-view').classList.remove('hidden');
@@ -18,7 +18,7 @@ backBtn.onclick = () => {
     document.getElementById('player-view').classList.remove('hidden');
 };
 
-// 2. Theme & LocalStorage Logic
+// 2. Theme & LocalStorage Logic (Your original logic)
 themeBtn.onclick = () => {
     document.body.classList.toggle('light');
     const isLight = document.body.classList.contains('light');
@@ -35,7 +35,7 @@ window.onload = () => {
     saved.forEach(name => addTrackToUI(name, null, true));
 };
 
-// 3. File & Playlist Handling
+// 3. File & Playlist Handling (Your original logic)
 fileInput.onchange = (e) => {
     const files = Array.from(e.target.files);
     files.forEach(file => {
@@ -73,7 +73,7 @@ function updatePlaylistUI() {
     Array.from(playlistEl.children).forEach((el, i) => el.classList.toggle('activeTrack', i === currentTrack));
 }
 
-// 4. Playback Controls
+// 4. Playback Controls (Your original logic)
 function playAudio() { audio.play(); playBtn.textContent = "⏸️"; document.body.classList.add('playing'); }
 function pauseAudio() { audio.pause(); playBtn.textContent = "▶️"; document.body.classList.remove('playing'); }
 
@@ -91,11 +91,12 @@ document.getElementById('volume').oninput = (e) => audio.volume = e.target.value
 
 function formatTime(t) { return isNaN(t) ? "0:00" : Math.floor(t/60) + ":" + String(Math.floor(t%60)).padStart(2,'0'); }
 
-// 5. Service Worker
-if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+// 5. Service Worker Registration
+if ('serviceWorker' in navigator) { 
+    navigator.serviceWorker.register('./sw.js'); 
+}
 
-
-// Auto-play Next Logic
+// 6. AUTO-PLAY NEXT LOGIC (The Fix)
 audio.onended = () => {
     if (playlist.length > 0) {
         currentTrack = (currentTrack + 1) % playlist.length; 
@@ -103,5 +104,3 @@ audio.onended = () => {
         playAudio();
     }
 };
-
-
