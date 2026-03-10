@@ -3,63 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0c29">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="WavePlayer">
   <title>WavePlayer</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f0c29">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="player">
   <header>
-    <button id="menuBtn" class="theme-toggle">🎶</button>
+    <button id="menuBtn" class="icon-btn" title="Playlist">🎶</button>
     <h1>WavePlayer</h1>
-    <button id="themeBtn" class="theme-toggle">🌙</button>
+    <button id="themeBtn" class="icon-btn" title="Toggle dark/light">🌙</button>
   </header>
 
+  <!-- Player View -->
   <div id="player-view">
-    <div class="disc-container">
-      <div class="disc left"></div>
-      <div class="disc right"></div>
+
+    <!-- Visual Theme Switcher -->
+    <div class="visual-toggle">
+      <button class="vis-btn active" data-vis="wave">〰 Wave</button>
+      <button class="vis-btn" data-vis="cassette">📼 Cassette</button>
+    </div>
+
+    <!-- Wave Visual -->
+    <div id="wave-visual" class="visual-section">
+      <canvas id="visualizer"></canvas>
+    </div>
+
+    <!-- Cassette Visual -->
+    <div id="cassette-visual" class="visual-section hidden">
+      <div class="disc-container">
+        <div class="cassette">
+          <span class="screw tl"></span>
+          <span class="screw tr"></span>
+          <span class="screw bl"></span>
+          <span class="screw br"></span>
+          <div class="cassette-window">
+            <div class="disc left"><div class="spool-tape"></div></div>
+            <div class="disc right"><div class="spool-tape"></div></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="track-info">
       <h2 id="track-title">Track Title</h2>
-      <h3 id="track-artist">Artist Name</h3>
+      <p id="track-artist">Artist Name</p>
     </div>
 
     <audio id="audio"></audio>
 
     <div class="seek-bar">
       <span id="current" class="time">0:00</span>
-      <input type="range" id="seek" value="0" min="0" max="100">
+      <input type="range" id="seek" value="0" min="0" max="100" step="0.1">
       <span id="duration" class="time">0:00</span>
     </div>
 
     <div class="controls">
-      <button id="prev">⏮️</button>
-      <button id="play">▶️</button>
-      <button id="next">⏭️</button>
+      <button id="shuffleBtn" class="ctrl-btn small" title="Shuffle">🔀</button>
+      <button id="prev"       class="ctrl-btn"       title="Previous">⏮️</button>
+      <button id="play"       class="ctrl-btn play"  title="Play/Pause">▶️</button>
+      <button id="next"       class="ctrl-btn"       title="Next">⏭️</button>
+      <button id="repeatBtn"  class="ctrl-btn small" title="Repeat">🔁</button>
     </div>
 
-    <div class="volume">
-      <span>🔊</span>
-      <input type="range" id="volume" min="0" max="100" value="50">
+    <div class="volume-row">
+      <span class="vol-icon">🔈</span>
+      <input type="range" id="volume" min="0" max="100" value="80">
+      <span class="vol-icon">🔊</span>
     </div>
   </div>
 
+  <!-- Library View -->
   <div id="library-view" class="hidden">
     <div class="library-header">
       <h3>Playlist</h3>
-      <label for="fileInput" class="upload-label">Add Music</label>
+      <label for="fileInput" class="upload-label">＋ Add Music</label>
       <input type="file" id="fileInput" multiple accept="audio/*">
     </div>
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="🔍 Search tracks...">
+    </div>
     <div id="playlist" class="playlist"></div>
-    <button id="backBtn" class="back-btn">Back to Player</button>
+    <div class="library-footer">
+      <button id="clearAllBtn" class="clear-btn">🗑 Clear All</button>
+      <button id="backBtn" class="back-btn">← Back to Player</button>
+    </div>
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
