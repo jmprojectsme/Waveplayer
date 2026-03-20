@@ -1,7 +1,10 @@
 // ═══════════════════════════════════════════════════════
-//  WavePlayer — app.js
+//  WavePlayer — app.js  v1.0.5
 //  Fixes: IndexedDB persistence, volume init, track overflow,
 //         activeTrack highlight, waveform visualizer, shuffle/repeat
+//  New:   Media Session API — notification bar with song title,
+//         prev/play/pause/next controls, lock screen support
+//         Wave centering fix (canvas resize timing)
 // ═══════════════════════════════════════════════════════
 
 // ── DOM ────────────────────────────────────────────────
@@ -105,8 +108,10 @@ function applyVisTheme(theme) {
   if (theme === 'wave') {
     waveVisual.classList.remove('hidden');
     cassetteVisual.classList.add('hidden');
-    resizeCanvas();
-    if (!audio.paused) startVisualizer(); else drawIdleWave();
+    requestAnimationFrame(() => {
+      resizeCanvas();
+      if (!audio.paused) startVisualizer();
+    });
   } else {
     waveVisual.classList.add('hidden');
     cassetteVisual.classList.remove('hidden');
@@ -145,8 +150,8 @@ async function init() {
   if (playlist.length > 0) loadTrack(0);
 
 
-  resizeCanvas();
-  drawIdleWave();
+  // Delay canvas resize until layout is fully painted
+  requestAnimationFrame(() => requestAnimationFrame(resizeCanvas));
 }
 
 // ── View Toggling ──────────────────────────────────────
@@ -237,10 +242,35 @@ function rebuildPlaylistUI() {
 // ── Load & Play ────────────────────────────────────────
 function loadTrack(i) {
   if (!playlist[i]) return;
-  audio.src         = playlist[i].src;
+  audio.src            = playlist[i].src;
   titleEl.textContent  = playlist[i].title;
   artistEl.textContent = playlist[i].artist;
   updateActiveTrack();
+  updateMediaSession();
+}
+
+function updateMediaSession() {
+  if (!('mediaSession' in navigator)) return;
+  const track = playlist[currentTrack];
+  if (!track) return;
+
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title:  track.title,
+    artist: track.artist || 'WavePlayer',
+    album:  'WavePlayer',
+    artwork: [
+      { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' }
+    ]
+  });
+
+  navigator.mediaSession.setActionHandler('play',          () => playAudio());
+  navigator.mediaSession.setActionHandler('pause',         () => pauseAudio());
+  navigator.mediaSession.setActionHandler('nexttrack',     () => nextTrack());
+  navigator.mediaSession.setActionHandler('previoustrack', () => prevTrack());
+  navigator.mediaSession.setActionHandler('seekto', e => {
+    if (e.seekTime !== undefined) audio.currentTime = e.seekTime;
+  });
 }
 
 function updateActiveTrack() {
@@ -255,6 +285,7 @@ function playAudio() {
   playBtn.textContent = '⏸️';
   document.body.classList.add('playing');
   startVisualizer();
+  if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
 }
 
 function pauseAudio() {
@@ -262,6 +293,7 @@ function pauseAudio() {
   playBtn.textContent = '▶️';
   document.body.classList.remove('playing');
   stopVisualizer();
+  if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
 }
 
 function resetPlayer() {
@@ -351,6 +383,13 @@ volumeEl.addEventListener('input', () => {
 audio.addEventListener('timeupdate', () => {
   if (!isNaN(audio.duration)) {
     seekEl.value = (audio.currentTime / audio.duration) * 100;
+    if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
+      navigator.mediaSession.setPositionState({
+        duration:     audio.duration,
+        playbackRate: audio.playbackRate,
+        position:     audio.currentTime
+      });
+    }
   }
   currentEl.textContent  = formatTime(audio.currentTime);
   durationEl.textContent = formatTime(audio.duration);
@@ -407,11 +446,21 @@ function setupAudioContext() {
 }
 
 function resizeCanvas() {
-  canvas.width  = canvas.offsetWidth  * window.devicePixelRatio;
-  canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+  const w = canvas.offsetWidth;
+  const h = canvas.offsetHeight;
+  if (w === 0 || h === 0) {
+    // Layout not ready yet, try again next frame
+    requestAnimationFrame(resizeCanvas);
+    return;
+  }
+  canvas.width  = w * window.devicePixelRatio;
+  canvas.height = h * window.devicePixelRatio;
   canvasCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  drawIdleWave();
 }
-window.addEventListener('resize', resizeCanvas);
+window.addEventListener('resize', () => {
+  resizeCanvas();
+});
 
 function startVisualizer() {
   if (currentVisTheme !== 'wave') return; // don't run if cassette theme active
@@ -481,7 +530,7 @@ function drawIdleWave() {
 // ── Service Worker ─────────────────────────────────────
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
+    navigator.serviceWorker.register('service-worker.js')
       .then(r  => console.log('SW registered:', r.scope))
       .catch(e => console.warn('SW failed:', e));
   });
@@ -489,4 +538,3 @@ if ('serviceWorker' in navigator) {
 
 // ── Start App ──────────────────────────────────────────
 init();
-      
