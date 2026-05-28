@@ -452,20 +452,25 @@ body.light .track-item:hover { background: rgba(0, 0, 0, 0.08); }
   font-size: 0.85rem;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; /* FIX: was getting cut off */
 }
 
-.track-menu-btn {
-  opacity: 0;
-  transition: opacity 0.15s;
-  flex-shrink: 0;
-}
+.track-item.old-track .track-name { opacity: 0.4; }
 
 .del-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
   opacity: 0;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s, color 0.15s;
   flex-shrink: 0;
 }
+.track-item:hover .del-btn { opacity: 1; }
+.del-btn:hover { color: #f87171; }
 
 /* ── Library Footer ───────────────────────────────────── */
 .library-footer {
@@ -502,263 +507,9 @@ body.light .back-btn { background: rgba(0,0,0,0.08); }
 }
 .clear-btn:hover { background: rgba(248, 113, 113, 0.3); }
 
-/* ── Lyrics Display ────────────────────────────────────── */
-.lyric-display {
-  width: 100%;
-  height: 30px;
-  font-size: 0.95rem;
-  color: #00cfff;
-  text-align: center;
-  margin-bottom: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  min-height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-body.light .lyric-display {
-  color: #0077cc;
-}
-
-.lyrics-btn {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 207, 255, 0.2);
-  background: rgba(0, 207, 255, 0.1);
-  color: #aaa;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-.lyrics-btn:hover {
-  background: rgba(0, 207, 255, 0.2);
-  border-color: #00cfff;
-  color: #00cfff;
-}
-.lyrics-btn.active {
-  background: rgba(0, 207, 255, 0.25);
-  border-color: #00cfff;
-  color: #00cfff;
-}
-
-body.light .lyrics-btn {
-  border-color: rgba(0, 100, 200, 0.2);
-  color: #666;
-}
-body.light .lyrics-btn:hover {
-  background: rgba(0, 100, 200, 0.15);
-  border-color: #0077cc;
-  color: #0077cc;
-}
-
-/* ── Settings Modal ───────────────────────────────────── */
-.settings-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.settings-modal.hidden {
-  display: none;
-}
-
-.settings-modal-content {
-  background: linear-gradient(135deg, rgba(15, 12, 41, 0.95), rgba(48, 43, 99, 0.95));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 30px 24px;
-  max-width: 320px;
-  width: 100%;
-  border: 1px solid rgba(0, 207, 255, 0.2);
-  position: relative;
-}
-
-.settings-modal-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.settings-modal-close:hover { color: #fff; }
-
-.settings-modal-content h2 {
-  font-size: 1.3rem;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.settings-modal-section {
-  margin-bottom: 20px;
-}
-
-.settings-modal-section h4 {
-  font-size: 0.85rem;
-  color: #aaa;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-
-.settings-modal-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 207, 255, 0.3);
-  background: rgba(0, 207, 255, 0.1);
-  color: #00cfff;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-.settings-modal-btn:hover {
-  background: rgba(0, 207, 255, 0.25);
-  border-color: #00cfff;
-}
-
-.settings-modal-info {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 14px;
-  font-size: 0.85rem;
-  line-height: 1.6;
-}
-
-.settings-modal-info p {
-  margin-bottom: 12px;
-}
-.settings-modal-info p:last-child {
-  margin-bottom: 0;
-}
-
-.settings-modal-info strong {
-  color: #00cfff;
-  display: block;
-  margin-bottom: 4px;
-}
-
-/* ── What's New Modal ─────────────────────────────────── */
-.whats-new-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.whats-new-modal.hidden {
-  display: none;
-}
-
-.whats-new-content {
-  background: linear-gradient(135deg, rgba(15, 12, 41, 0.95), rgba(48, 43, 99, 0.95));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 30px 24px;
-  max-width: 320px;
-  width: 100%;
-  border: 1px solid rgba(0, 207, 255, 0.2);
-  position: relative;
-}
-
-.whats-new-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.whats-new-close:hover { color: #fff; }
-
-.whats-new-content h2 {
-  font-size: 1.3rem;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.whats-new-list {
-  margin-bottom: 20px;
-}
-
-.whats-new-item {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.whats-new-item:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.item-icon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-
-.whats-new-item strong {
-  display: block;
-  font-size: 0.95rem;
-  margin-bottom: 4px;
-}
-
-.whats-new-item p {
-  font-size: 0.8rem;
-  color: #aaa;
-  margin: 0;
-}
-
-.whats-new-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(0, 207, 255, 0.25);
-  color: #00cfff;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-}
-.whats-new-btn:hover {
-  background: rgba(0, 207, 255, 0.4);
-}
-
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 400px) {
   .player { width: 100%; border-radius: 16px; padding: 18px 14px; }
   .disc   { width: 75px; height: 75px; }
   }
-  
+    
