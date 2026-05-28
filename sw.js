@@ -2,7 +2,7 @@
 // Updated cache name to trigger update installation
 // Added auto-activation for seamless v1.0.5 deployment
 
-const cacheName = 'wave-v1.0.5'; 
+const cacheName = 'wave-v2.0.0'; 
 const assets = [
   './',
   './index.html',
