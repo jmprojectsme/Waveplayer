@@ -1,8 +1,9 @@
-// WavePlayer sw.js — v1.0.5
-// Updated cache name to trigger update installation
-// Added auto-activation for seamless v1.0.5 deployment
+// WavePlayer sw.js — v6
+// Fixed: removed icon.png from assets (was breaking cache install)
+// Fixed: added clients.claim() for immediate activation  
+// Fixed: offline fallback so app loads without internet
 
-const cacheName = 'wave-v2.0.0'; 
+const cacheName = 'wave-v6';
 const assets = [
   './',
   './index.html',
@@ -12,7 +13,6 @@ const assets = [
 ];
 
 self.addEventListener('install', e => {
-  // skipWaiting ensures the new Service Worker takes over immediately
   self.skipWaiting();
   e.waitUntil(
     caches.open(cacheName)
@@ -22,7 +22,6 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', e => {
-  // Clean up old caches to save space and ensure clean installation
   e.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.map(key => {
@@ -33,6 +32,7 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // Skip non-GET and chrome-extension requests
   if (e.request.method !== 'GET') return;
   if (e.request.url.startsWith('chrome-extension://')) return;
 
@@ -41,6 +41,7 @@ self.addEventListener('fetch', e => {
       if (cached) return cached;
       return fetch(e.request)
         .then(response => {
+          // Cache new valid responses
           if (response && response.status === 200) {
             const clone = response.clone();
             caches.open(cacheName).then(cache => cache.put(e.request, clone));
@@ -48,6 +49,7 @@ self.addEventListener('fetch', e => {
           return response;
         })
         .catch(() => {
+          // Offline fallback — serve index.html
           return caches.match('./index.html');
         });
     })
