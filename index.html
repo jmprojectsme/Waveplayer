@@ -17,7 +17,7 @@
   <header>
     <button id="menuBtn" class="icon-btn" title="Playlist">🎶</button>
     <h1>WavePlayer</h1>
-    <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+    <button id="themeBtn" class="icon-btn" title="Toggle dark/light">🌙</button>
   </header>
 
   <!-- Player View -->
@@ -93,90 +93,6 @@
       <button id="clearAllBtn" class="clear-btn">🗑 Clear All</button>
       <button id="backBtn" class="back-btn">← Back to Player</button>
     </div>
-  </div>
-
-  <!-- Settings View -->
-  <div id="settings-view" class="hidden">
-    <div class="settings-header">
-      <h3>Settings</h3>
-      <button id="settingsBackBtn" class="close-btn" title="Close">✕</button>
-    </div>
-    
-    <div class="settings-content">
-      <!-- Theme Toggle -->
-      <div class="setting-item">
-        <div class="setting-label">
-          <span>🌙 Dark Mode</span>
-        </div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="darkModeToggle">
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <!-- App Info Section -->
-      <div class="settings-divider"></div>
-      <div class="settings-section-title">App Info</div>
-
-      <div class="setting-item">
-        <span class="setting-label">Version</span>
-        <span class="setting-value">v1.0.5</span>
-      </div>
-
-      <div class="setting-item">
-        <span class="setting-label">Developer</span>
-        <span class="setting-value">jmprojectsme</span>
-      </div>
-
-      <div class="setting-item">
-        <span class="setting-label">Last Updated</span>
-        <span class="setting-value">June 3, 2026</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- What's New Modal -->
-<div id="whatsNewModal" class="modal hidden">
-  <div class="modal-content">
-    <button id="closeModalBtn" class="modal-close">✕</button>
-    <h2>🎉 What's New in v1.0.5</h2>
-    
-    <div class="modal-body">
-      <div class="update-item">
-        <span class="update-icon">⚙️</span>
-        <div>
-          <h4>Settings Menu</h4>
-          <p>New settings panel with dark/light mode and app information</p>
-        </div>
-      </div>
-
-      <div class="update-item">
-        <span class="update-icon">⏸️</span>
-        <div>
-          <h4>Resume Playback</h4>
-          <p>Continue playing from where you left off when you reopen the app</p>
-        </div>
-      </div>
-
-      <div class="update-item">
-        <span class="update-icon">🐛</span>
-        <div>
-          <h4>Bug Fixes</h4>
-          <p>Fixed service worker registration and memory leak issues</p>
-        </div>
-      </div>
-
-      <div class="update-item">
-        <span class="update-icon">⚡</span>
-        <div>
-          <h4>Performance</h4>
-          <p>Optimized shuffle queue and reduced memory usage</p>
-        </div>
-      </div>
-    </div>
-
-    <button id="dismissModalBtn" class="modal-btn">Got It!</button>
   </div>
 </div>
 
