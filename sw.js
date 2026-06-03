@@ -1,9 +1,9 @@
-// WavePlayer sw.js — v6
-// Fixed: removed icon.png from assets (was breaking cache install)
-// Fixed: added clients.claim() for immediate activation  
-// Fixed: offline fallback so app loads without internet
+// WavePlayer sw.js — v1.0.5
+// Fixed: Service worker registration path in app.js
+// Fixed: Offline fallback, immediate activation
+// Caches all app assets for offline use
 
-const cacheName = 'wave-v6';
+const cacheName = 'wave-v1.0.5';
 const assets = [
   './',
   './index.html',
