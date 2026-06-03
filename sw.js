@@ -1,9 +1,9 @@
-// WavePlayer sw.js — v1.0.5
+// WavePlayer sw.js — v1.0.4
 // Fixed: Service worker registration path in app.js
 // Fixed: Offline fallback, immediate activation
 // Caches all app assets for offline use
 
-const cacheName = 'wave-v1.0.5';
+const cacheName = 'wave-v1.0.4';
 const assets = [
   './',
   './index.html',
