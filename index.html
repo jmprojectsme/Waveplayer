@@ -17,7 +17,7 @@
   <header>
     <button id="menuBtn" class="icon-btn" title="Playlist">🎶</button>
     <h1>WavePlayer</h1>
-    <button id="themeBtn" class="icon-btn" title="Toggle dark/light">🌙</button>
+    <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
   </header>
 
   <!-- Player View -->
@@ -96,6 +96,67 @@
   </div>
 </div>
 
+<!-- Settings Modal -->
+<div id="settingsModal" class="settings-modal hidden">
+  <div class="settings-modal-content">
+    <button id="settingsClose" class="settings-modal-close">✕</button>
+    <h2>⚙️ Settings</h2>
+
+    <div class="settings-modal-section">
+      <h4>Appearance</h4>
+      <button id="settingsThemeBtn" class="settings-modal-btn">🌙 Dark Mode</button>
+    </div>
+
+    <div class="settings-modal-section">
+      <h4>About</h4>
+      <div class="settings-modal-info">
+        <p><strong>Developer:</strong><br><span id="developerInfo">Built by Jaymar Reperuga</span></p>
+        <p><strong>Version:</strong><br><span id="versionInfo">v1.0.6</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- What's New Modal -->
+<div id="whatsNewModal" class="whats-new-modal hidden">
+  <div class="whats-new-content">
+    <button id="whatsNewClose" class="whats-new-close">✕</button>
+    <h2>✨ What's New in v1.0.6</h2>
+    <div class="whats-new-list">
+      <div class="whats-new-item">
+        <span class="item-icon">🔧</span>
+        <div>
+          <strong>Crash Fixes</strong>
+          <p>Improved playback stability for all audio formats</p>
+        </div>
+      </div>
+      <div class="whats-new-item">
+        <span class="item-icon">💾</span>
+        <div>
+          <strong>Remember Your Spot</strong>
+          <p>WavePlayer now remembers the last song you played and where you left off</p>
+        </div>
+      </div>
+      <div class="whats-new-item">
+        <span class="item-icon">⚙️</span>
+        <div>
+          <strong>Settings Menu</strong>
+          <p>Clean up your player with hidden theme controls in the new settings menu</p>
+        </div>
+      </div>
+      <div class="whats-new-item">
+        <span class="item-icon">⋯</span>
+        <div>
+          <strong>Song Options</strong>
+          <p>Tap the 3-dot menu on any song to rename, edit metadata, or view details</p>
+        </div>
+      </div>
+    </div>
+    <button id="whatsNewDone" class="whats-new-btn">Got it!</button>
+  </div>
+</div>
+
 <script src="app.js"></script>
 </body>
-</html>
+        </html>
+        
