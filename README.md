@@ -1,86 +1,182 @@
-# WavePlayer 🎵
+# 🎵 WavePlayer
 
-A personal music player PWA built with HTML, CSS, and JavaScript. Designed to be simple, fast, and work fully offline on Android.
+**Your music. Your wave.**
 
-## Features
+A mobile-first music player PWA that lets you play your local music files directly from your phone — no streaming, no account, no ads. Just your music.
 
-- 🎵 Play local MP3 and audio files
-- 📼 **Two visual themes** — Live waveform visualizer or Cassette tape
-- 💾 **Persistent library** — Music stays saved via IndexedDB, no re-uploading every session
-- ⏸️ **Resume Playback** — Continue from where you left off (v1.0.5)
-- ⚙️ **Settings Menu** — Dark/Light mode, app info, and version details (v1.0.5)
-- 🔀 Shuffle mode
-- 🔁 Repeat (off / repeat all / repeat one)
-- 🔍 Search tracks by name
-- 🌗 Dark / Light mode
-- 📱 PWA — installs on Android home screen, works offline
-- ⌨️ Keyboard shortcuts
+---
 
-## Keyboard Shortcuts
+## 📦 Version
 
-| Key | Action |
-|-----|--------|
-| `Space` | Play / Pause |
-| `→` | Next track |
-| `←` | Previous track |
-| `↑` | Volume up |
-| `↓` | Volume down |
+`v1.0.6` — Settings, Song Management & Stability Fixes
 
-## File Structure
+---
+
+## ✨ Features
+
+### Player
+- Play local audio files (MP3, WAV, OGG, M4A, FLAC, AAC)
+- Seek bar with current time and duration display
+- Volume control
+- Shuffle mode
+- Repeat modes: Off / Repeat All / Repeat One
+- Remembers last played song and position on reopen
+
+### Visualizer
+- **Wave** — real-time waveform visualizer using Web Audio API
+- **Cassette** — animated cassette tape visual
+- Toggle between both with one tap
+
+### Library / Playlist
+- Add multiple songs at once from your phone storage
+- Search / filter tracks by name
+- **Long press** on any track to reveal:
+  - ✕ Remove button
+  - ⋯ 3-dot context menu
+- **3-dot menu options:**
+  - 📋 View track details
+  - ✏️ Rename track
+  - 🏷️ Edit artist info
+- Clear entire library with one tap
+
+### Settings
+- ⚙️ Settings menu — theme toggle and app info
+- Dark / Light mode toggle
+- Version info and developer credit
+
+### What's New Modal
+- Shows once on first open after each update
+- Highlights new features clearly
+
+### Media Session API
+- Song title and controls on lock screen
+- Notification bar controls (play/pause/prev/next)
+- Works when app is in background
+
+---
+
+## 🗄️ Data Storage
+
+Songs are stored locally using **IndexedDB** — music persists across sessions without re-uploading.
+
+| Store    | Fields |
+|----------|--------|
+| `tracks` | id, title, artist, blob |
+
+Settings stored in `localStorage`:
+- `wave_theme` — dark/light preference
+- `wave_visual` — wave/cassette preference
+- `wave_lastTrack` — last played track index
+- `wave_lastPos` — last playback position
+- `wave_seen_v1_0_6` — What's New modal seen flag
+
+---
+
+## 🚀 Deployment
+
+WavePlayer is a static PWA — no build step required.
 
 ```
-Waveplayer/
-├── index.html       # App markup
-├── style.css        # All styles
-├── app.js           # Player logic
-├── sw.js            # Service worker (offline support)
-├── manifest.json    # PWA manifest
-└── icon.png         # App icon (512x512)
+index.html
+style.css
+app.js
+manifest.json
+service-worker.js
+icons/
+  icon-192.png
+  icon-512.png
 ```
 
-## Version History
+Deploy to **GitHub Pages**:
+1. Push all files to your repo's `main` branch
+2. Go to Settings → Pages → Source: `main / root`
+3. Done — accessible at `https://yourusername.github.io/WavePlayer/`
 
-| Version | Date | Changes |
-|---------|------|----------|
-| V1.0.5 | June 3, 2026 | Settings menu, resume playback, bug fixes, improved light/dark theme support |
-| V1.0.4 | March 11, 2026 | IndexedDB persistence, waveform visualizer, cassette theme, shuffle, repeat, search |
-| V1.0.3 | — | Initial release |
+---
 
-## How to Use
+## 🛠️ Tech Stack
 
-1. Open the app and tap **🎶** to go to your playlist
-2. Tap **＋ Add Music** to load audio files from your device
-3. Tap any track to play it
-4. Switch between **Wave** and **Cassette** themes using the toggle
-5. Your library is saved automatically — no need to re-add files
-6. Tap **⚙️** to access settings, including dark/light mode
+| Layer       | Technology |
+|-------------|------------|
+| UI          | Vanilla HTML + CSS |
+| Logic       | Vanilla JavaScript (ES6+) |
+| Storage     | IndexedDB (audio blobs) + localStorage (settings) |
+| Audio       | Web Audio API (visualizer) |
+| PWA         | Service Worker + Web App Manifest |
+| Media       | Media Session API (lock screen controls) |
+| Fonts       | Inter (Google Fonts) |
+| Hosting     | GitHub Pages |
 
-## Tech Stack
+---
 
-- HTML / CSS / JavaScript
-- Web Audio API (waveform visualizer)
-- IndexedDB (persistent music library)
-- Service Worker (offline PWA)
-- Media Session API (lock screen controls)
+## 📋 Changelog
 
-## What's New in v1.0.5
+### v1.0.6
+- ✅ Fixed: Random song stop after one track — added proper audio load delay
+- ✅ Fixed: Songs disappearing after closing app — IndexedDB persistence restored
+- ✨ New: Settings menu (⚙️) — replaces old theme toggle button
+- ✨ New: What's New modal — shows once on first open after update
+- ✨ New: 3-dot context menu per song (long press to reveal)
+  - View track details
+  - Rename track
+  - Edit artist info
+- ✨ New: Remember last played song and position on reopen
 
-### ✨ Features
-- **Settings Menu** — Access dark/light mode and app information in one place
-- **Resume Playback** — The app remembers your last played track and position for up to 7 days
-- **Improved Theme Support** — Better light mode styling for waveform visualizer and UI elements
+### v1.0.5
+- Fixed: IndexedDB persistence across sessions
+- Fixed: Volume slider init
+- Fixed: Active track highlight
+- Fixed: Waveform visualizer centering
+- New: Media Session API — lock screen and notification bar controls
+- New: Wave / Cassette visualizer toggle
+- New: Shuffle and Repeat modes
 
-### 🐛 Bug Fixes
-- Fixed service worker registration path (`service-worker.js` → `sw.js`)
-- Fixed memory leaks by properly revoking object URLs on track deletion
-- Added file size validation (50MB max per file)
-- Improved error handling for file operations
+### v1.0.4 and earlier
+- Initial PWA setup
+- Basic play/pause/next/prev controls
+- Local file upload and playlist management
+- Dark/light theme toggle
+- Seek bar and volume control
+- Service worker for offline support
 
-### ⚡ Performance
-- Optimized shuffle queue generation
-- Reduced memory footprint with proper cleanup
-- Better canvas rendering in light mode
+---
 
-## License
+## 🗺️ Roadmap
 
-MIT — free to use and modify.
+### v1.0.7
+- [ ] Playlist reordering (drag to sort)
+- [ ] Song artwork/thumbnail support
+- [ ] Sleep timer
+
+### v1.0.8
+- [ ] Multiple playlists support
+- [ ] Equalizer presets
+
+### v1.1.0
+- [ ] Cloud sync (optional)
+- [ ] Import from URL
+
+---
+
+## 📁 File Structure
+
+```
+WavePlayer/
+├── index.html         # App shell, player UI, modals
+├── style.css          # Dark/light theme, animations
+├── app.js             # Player logic, IndexedDB, visualizer
+├── manifest.json      # PWA manifest
+├── service-worker.js  # Offline caching
+└── icons/
+    ├── icon-192.png
+    └── icon-512.png
+```
+
+---
+
+## 👤 Author
+
+Built by **Jaymar Reperuga** ([@jmprojectsme](https://github.com/jmprojectsme))
+Self-taught developer · Built entirely on a Xiaomi Redmi Note 14 📱
+
+---
