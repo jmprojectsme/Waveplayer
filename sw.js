@@ -3,7 +3,7 @@
 // Fixed: Offline fallback, immediate activation
 // Caches all app assets for offline use
 
-const cacheName = 'wave-v1.0.4';
+const cacheName = 'wave-v1.0.6';
 const assets = [
   './',
   './index.html',
