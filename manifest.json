@@ -1,6 +1,7 @@
 {
   "name": "WavePlayer",
   "short_name": "Wave",
+  "description": "A mobile-first music player PWA. Play your local music files offline — no streaming, no account, no ads.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f0c29",
